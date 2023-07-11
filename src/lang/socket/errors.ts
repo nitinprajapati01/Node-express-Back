@@ -1,0 +1,1 @@
+export const initSocketFailed = "Failed to init socket!"
