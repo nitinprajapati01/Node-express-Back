@@ -29,9 +29,21 @@ export const initSocket = (httpServer: HttpServer) => {
 
             socket.emit("connection-acknowledgement", "hi client!");
 
-            socket.on("execute-expensive-task", (task: Task) => {
+            socket.on("join-personal-room", (clientId: string) => {
+                const joinPersonalRoomDebugLog = ioConnectionDebugLog.extend("join-personal-room");
+                const joinPersonalRoomErrorLog = ioConnectionDebugLog.extend("join-personal-room:error");
+                if(clientId) {
+                    socket.join(clientId);
+                    joinPersonalRoomDebugLog(`${socket.id} joined ${clientId} room`);
+                } else {
+                    joinPersonalRoomErrorLog(`${socket.id} didn't find clientId to join!`);
+                    // Handle the error!
+                }
+            })
+
+            socket.on("execute-expensive-task", (clientId: string, task: Task) => {
                 const executeExpensiveTaskDebugLog = ioConnectionDebugLog.extend("execute-expensive-task");
-                executeExpensiveTaskDebugLog("task:", task);
+                executeExpensiveTaskDebugLog("clientId", clientId, "task:", task);
 
                 setTimeout(
                     () => {
@@ -39,8 +51,9 @@ export const initSocket = (httpServer: HttpServer) => {
                         executeExpensiveTaskDebugLog("done task:", task);
 
                         socket.emit("expensive-task-executed", task);   // responding to the same socket channel client.
+                        socket.to(clientId).emit("expensive-task-executed", task);   // broadcasting to the client specific socket room.
                     }, 
-                    Math.random()*100000,
+                    Math.random()*10000,
                 );
             });
         });
