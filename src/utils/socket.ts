@@ -18,7 +18,7 @@ export const initSocket = (httpServer: HttpServer) => {
         debugLog("in initSocket");
         const io = new SocketServer(httpServer, {
             cors: {
-                origin: "http://localhost:3000",
+                origin: process.env.CLIENT_URL,     // http://localhost:3000
             }
         });
 
