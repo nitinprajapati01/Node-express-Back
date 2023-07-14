@@ -50,8 +50,9 @@ export const initSocket = (httpServer: HttpServer) => {
                         task.isDone = true;
                         executeExpensiveTaskDebugLog("done task:", task);
 
-                        socket.emit("expensive-task-executed", task);   // responding to the same socket channel client.
-                        socket.to(clientId).emit("expensive-task-executed", task);   // broadcasting to the client specific socket room.
+                        // socket.emit("expensive-task-executed", task);   // responding to the same socket id.
+                        // socket.to(clientId).emit("expensive-task-executed", task);   // broadcasting to the client specific socket room.
+                        socket.nsp.to(clientId).emit("expensive-task-executed", task);  // emitting(including self!) to the client specific room.
                     }, 
                     Math.random()*10000,
                 );
