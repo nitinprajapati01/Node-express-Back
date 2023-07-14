@@ -1,4 +1,5 @@
-import { createServer } from "http";
+// import { createServer } from "http";
+
 import express from "express";
 import * as expressWinston from "express-winston";
 import cors from "cors";
@@ -11,6 +12,8 @@ import { defaultErrorHandler } from "./utils/errorHandlers";
 import { initSocket } from "./utils/socket";
 
 const debugLog: debug.IDebugger = debug("server");
+
+const createServer: require("http"); //Add for test
 
 const app: express.Application = express();
 
