@@ -45,6 +45,8 @@ export const initSocket = (httpServer: HttpServer) => {
                 const executeExpensiveTaskDebugLog = ioConnectionDebugLog.extend("execute-expensive-task");
                 executeExpensiveTaskDebugLog("clientId", clientId, "task:", task);
 
+                socket.nsp.to(clientId).emit("append-new-task", task);
+
                 setTimeout(
                     () => {
                         task.isDone = true;
