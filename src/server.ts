@@ -13,8 +13,6 @@ import { initSocket } from "./utils/socket";
 
 const debugLog: debug.IDebugger = debug("server");
 
-// const createServer: require("http"); //Add for test
-
 const app: express.Application = express();
 
 const server = createServer(app);
