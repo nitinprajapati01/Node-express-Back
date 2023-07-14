@@ -1,4 +1,5 @@
-import { createServer } from "http";
+// import { createServer } from "http";
+const createServer = require('http');
 import express from "express";
 import * as expressWinston from "express-winston";
 import cors from "cors";
