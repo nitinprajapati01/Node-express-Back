@@ -10,7 +10,9 @@ import { errorLoggerOptions, requestLoggerOptions } from "./utils/loggers";
 import { defaultErrorHandler } from "./utils/errorHandlers";
 import { initSocket } from "./utils/socket";
 
-const debugLog: debug.IDebugger = debug("server");
+import  "./utils/redis";
+
+const debugLog: debug.IDebugger = debug("server.ts");
 
 const app: express.Application = express();
 
